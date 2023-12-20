@@ -1,14 +1,14 @@
 #include "SparkFun_Qwiic_Ultrasonic_Arduino_Library.h"
 
-// Create an Ultrasonic sensor object
+// Create an ultrasonic sensor object
 QwiicUltrasonic myUltrasonic;
 
 // Here we set the device address. Note that an older version of the Qwiic
 // Ultrasonic firmware used a default address of 0x00. If yours uses 0x00,
 // you'll need to change the address below. It is also recommended to run
 // Example 2 to change the address to the new default.
-uint8_t deviceAddress = QWIIC_ULTRASONIC_DEFAULT_ADDRESS;
-// uint8_t deviceAddress = 0x20;
+uint8_t deviceAddress = kQwiicUltrasonicDefaultAddress; // 0x2F
+// uint8_t deviceAddress = 0x00;
 
 void setup()
 {
@@ -55,7 +55,7 @@ void setup()
         Serial.println(newAddress, HEX);
 
         // Check if the address is valid
-        if (newAddress < QWIIC_ULTRASONIC_MIN_ADDRESS || newAddress > QWIIC_ULTRASONIC_MAX_ADDRESS)
+        if (newAddress < kQwiicUltrasonicMinAddress || newAddress > kQwiicUltrasonicMaxAddress)
         {
             Serial.println("Invalid address!");
             continue;

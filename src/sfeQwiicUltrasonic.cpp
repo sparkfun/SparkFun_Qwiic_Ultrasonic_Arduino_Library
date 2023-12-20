@@ -1,10 +1,5 @@
 #include "sfeQwiicUltrasonic.h"
 
-sfeQwiicUltrasonic::sfeQwiicUltrasonic()
-{
-    _theBus = nullptr;
-}
-
 sfeTkError_t sfeQwiicUltrasonic::begin(sfeTkII2C *theBus)
 {
     // Nullptr check
@@ -12,7 +7,7 @@ sfeTkError_t sfeQwiicUltrasonic::begin(sfeTkII2C *theBus)
         return kSTkErrFail;
 
     // Check the device address
-    if (theBus->address() < QWIIC_ULTRASONIC_MIN_ADDRESS || theBus->address() > QWIIC_ULTRASONIC_MAX_ADDRESS)
+    if (theBus->address() < kQwiicUltrasonicMinAddress || theBus->address() > kQwiicUltrasonicMaxAddress)
     {
         // An older version of the firmware used 0x00 as the default address.
         // It's not really a valid address, but we need to allow it. Any other
@@ -40,15 +35,11 @@ sfeTkError_t sfeQwiicUltrasonic::triggerAndRead(uint16_t &distance)
     uint8_t rawData[2] = {0, 0};
 
     // Attempt to read the distance
-    sfeTkError_t err = _theBus->readRegisterRegion(QWIIC_ULTRASONIC_REGISTER_TRIGGER, rawData, 2, bytesRead);
+    sfeTkError_t err = _theBus->readRegisterRegion(kQwiicUltrasonicRegisterTrigger, rawData, 2, bytesRead);
 
     // Check whether the read was successful
     if (err)
         return err;
-
-    // Check whether all data was read
-    if (bytesRead != 2)
-        return kSTkErrFail;
 
     // Store raw data
     distance = (rawData[0] << 8) | rawData[1];
@@ -57,17 +48,14 @@ sfeTkError_t sfeQwiicUltrasonic::triggerAndRead(uint16_t &distance)
     return kSTkErrOk;
 }
 
-sfeTkError_t sfeQwiicUltrasonic::changeAddress(uint8_t address)
+sfeTkError_t sfeQwiicUltrasonic::changeAddress(const uint8_t &address)
 {
     // Check whether the address is valid
-    if (address < QWIIC_ULTRASONIC_MIN_ADDRESS || address > QWIIC_ULTRASONIC_MAX_ADDRESS)
+    if (address < kQwiicUltrasonicMinAddress || address > kQwiicUltrasonicMaxAddress)
         return kSTkErrFail;
 
-    // The first bit of the address must be set to 1
-    address |= 0x80;
-
-    // Write the new address to the device
-    sfeTkError_t err = _theBus->writeByte(address);
+    // Write the new address to the device. The first bit must be set to 1
+    sfeTkError_t err = _theBus->writeByte(address | 0x80);
 
     // Check whether the write was successful
     if (err)
@@ -78,4 +66,9 @@ sfeTkError_t sfeQwiicUltrasonic::changeAddress(uint8_t address)
 
     // Done!
     return kSTkErrOk;
+}
+
+uint8_t sfeQwiicUltrasonic::getAddress()
+{
+    return _theBus->address();
 }
