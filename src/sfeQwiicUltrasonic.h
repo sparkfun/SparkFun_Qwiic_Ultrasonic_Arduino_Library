@@ -6,7 +6,7 @@
 // Available I2C addresses of the Qwiic Ultrasonic
 const uint8_t kQwiicUltrasonicAddresses[] = {0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27,
                                              0x28, 0x29, 0x2A, 0x2B, 0x2C, 0x2D, 0x2E, 0x2F};
-const uint8_t kQwiicUltrasonicNumAddresses = sizeof(kQwiicUltrasonicAddresses);
+const uint8_t kQwiicUltrasonicNumAddresses = sizeof(kQwiicUltrasonicAddresses) / sizeof(uint8_t);
 const uint8_t kQwiicUltrasonicMinAddress = kQwiicUltrasonicAddresses[0];
 const uint8_t kQwiicUltrasonicMaxAddress = kQwiicUltrasonicAddresses[15];
 const uint8_t kQwiicUltrasonicDefaultAddress = 0x2F;

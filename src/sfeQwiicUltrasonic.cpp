@@ -38,7 +38,7 @@ sfeTkError_t sfeQwiicUltrasonic::triggerAndRead(uint16_t &distance)
     sfeTkError_t err = _theBus->readRegisterRegion(kQwiicUltrasonicRegisterTrigger, rawData, 2, bytesRead);
 
     // Check whether the read was successful
-    if (err)
+    if (err != kSTkErrOk)
         return err;
 
     // Store raw data
@@ -58,7 +58,7 @@ sfeTkError_t sfeQwiicUltrasonic::changeAddress(const uint8_t &address)
     sfeTkError_t err = _theBus->writeByte(address | 0x80);
 
     // Check whether the write was successful
-    if (err)
+    if (err != kSTkErrOk)
         return err;
 
     // Update the address in the bus
