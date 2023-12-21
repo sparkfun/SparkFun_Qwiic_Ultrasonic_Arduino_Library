@@ -1,29 +1,27 @@
 #########################################################
-# Syntax Coloring Map for TODO: Add name                #
+# Syntax Coloring Map for the Qwiic Ultrasonic Sensor   #
 #########################################################
 # Class
 #########################################################
 
-# TODO: Add this
-TemplateClass KEYWORD1
+QwiicUltrasonic KEYWORD1
 
 #########################################################
 # Methods and Functions
 #########################################################
 
-# TODO: Add these
 begin KEYWORD2
+isConnected KEYWORD2
+triggerAndRead KEYWORD2
+changeAddress KEYWORD2
 
 #########################################################
 # Constants
 #########################################################
 
-# TODO: Add these
-TEMPALTE_CONSTANT LITERAL1
-
-#########################################################
-# Structs
-#########################################################
-
-# TODO: Add these
-template_struct_t LITERAL3
+QWIIC_ULTRASONIC_ADDRESSES LITERAL1
+QWIIC_ULTRASONIC_NUM_ADDRESSES LITERAL1
+QWIIC_ULTRASONIC_MIN_ADDRESS LITERAL1
+QWIIC_ULTRASONIC_MAX_ADDRESS LITERAL1
+QWIIC_ULTRASONIC_DEFAULT_ADDRESS LITERAL1
+QWIIC_ULTRASONIC_REGISTER_TRIGGER LITERAL1
