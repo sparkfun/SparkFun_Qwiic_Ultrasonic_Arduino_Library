@@ -22,7 +22,8 @@ void setup()
     while (myUltrasonic.begin(deviceAddress) == false)
     {
         Serial.println("Ultrasonic sensor not connected, check your wiring and I2C address!");
-        delay(1000);
+        while(1)       
+          ;
     }
 
     Serial.println("Ultrasonic sensor connected!");
@@ -30,15 +31,13 @@ void setup()
 
 void loop()
 {
-    // Get measurement from sensor. Note that the mesaured distance actually
-    // comes from the previous trigger, so measurements will be slightly delayed
     uint16_t distance = 0;
-    myUltrasonic.triggerAndRead(distance);
+    myUltrasonic.getDistance(distance);
 
     // Print measurement
     Serial.print("Distance (mm): ");
     Serial.println(distance);
 
     // Wait a bit
-    delay(100);
+    delay(250);
 }

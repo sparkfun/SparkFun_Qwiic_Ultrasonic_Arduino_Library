@@ -34,6 +34,11 @@ class sfeQwiicUltrasonic
     /// @brief Triggers a new measurement and reads the previous one
     /// @param distance Distance in mm
     /// @return 0 for succuss, negative for errors, positive for warnings
+    sfeTkError_t getDistace(uint16_t &distance);
+
+    /// @brief Triggers a new measurement and reads the previous one
+    /// @param distance Distance in mm
+    /// @return 0 for succuss, negative for errors, positive for warnings
     sfeTkError_t triggerAndRead(uint16_t &distance);
 
     /// @brief Changes the I2C address of the Qwiic Ultrasonic sensor

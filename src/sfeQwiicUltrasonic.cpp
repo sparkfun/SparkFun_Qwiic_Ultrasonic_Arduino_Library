@@ -29,6 +29,25 @@ sfeTkError_t sfeQwiicUltrasonic::isConnected()
     return _theBus->ping();
 }
 
+sfeTkError_t sfeQwiicUltrasonic::getDistace(uint16_t &distance)
+{
+    size_t bytesRead = 0;
+    uint8_t rawData[2] = {0, 0};
+
+    // Attempt to read the distance
+    sfeTkError_t err = _theBus->readRegisterRegion(kQwiicUltrasonicRegisterTrigger, rawData, 2, bytesRead);
+
+    // Check whether the read was successful
+    if (err != kSTkErrOk)
+        return err;
+
+    // Store raw data
+    distance = (rawData[0] << 8) | rawData[1];
+
+    // Done!
+    return kSTkErrOk;
+}
+
 sfeTkError_t sfeQwiicUltrasonic::triggerAndRead(uint16_t &distance)
 {
     size_t bytesRead = 0;
