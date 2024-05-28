@@ -33,10 +33,11 @@ sfeTkError_t sfeQwiicUltrasonic::getDistace(uint16_t &distance)
 {
     size_t bytesRead = 0;
     uint8_t rawData[2] = {0, 0};
+    sfeTkError_t err;
 
-    // Attempt to read the distance
-    sfeTkError_t err = _theBus->write(kQwiicUltrasonicRegisterTrigger, rawData, 2, bytesRead);
-    sfeTkError_t err = _theBus->readRegisterRegion(kQwiicUltrasonicRegisterTrigger, rawData, 2, bytesRead);
+    _theBus->writeRegisterByte(theBus->address(), kUltrasonicDistanceReadCommand);
+    delay(10);
+    err = _theBus->readRegisterRegion(kQwiicUltrasonicRegisterTrigger, rawData, 2, bytesRead);
 
     // Check whether the read was successful
     if (err != kSTkErrOk)
@@ -71,11 +72,14 @@ sfeTkError_t sfeQwiicUltrasonic::getTriggeredDistance(uint16_t &distance)
 sfeTkError_t sfeQwiicUltrasonic::changeAddress(const uint8_t &address)
 {
     // Check whether the address is valid
+    sfeTkError_t err;
+
     if (address < kQwiicUltrasonicMinAddress || address > kQwiicUltrasonicMaxAddress)
         return kSTkErrFail;
 
     // Write the new address to the device. The first bit must be set to 1
-    sfeTkError_t err = _theBus->writeByte(address | 0x80);
+    _theBus->writeRegisterByte(_theBus->address(), kUltrasonicAddressChangeCommand);
+    err = _theBus->writeRegisterByte(_theBus->address(), address << 1);
 
     // Check whether the write was successful
     if (err != kSTkErrOk)

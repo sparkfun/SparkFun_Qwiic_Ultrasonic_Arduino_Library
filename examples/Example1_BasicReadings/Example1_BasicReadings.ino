@@ -14,7 +14,7 @@ void setup()
 {
     // Start serial
     Serial.begin(115200);
-    Serial.println("Qwiic Ultrasonic Example 1 - Basic Readings");
+    Serial.println("Ultrasonic Distance Sensor Example 1 - Basic Distance Sensing");
 
     Wire.begin();
 
@@ -37,6 +37,12 @@ void loop()
     // Print measurement
     Serial.print("Distance (mm): ");
     Serial.println(distance);
+
+    //Serial.println("Distance (cm): "); 
+    //Serial.print((distance / 10.0), 2);         
+
+    //Serial.println("Distace (in): "); 
+    //Serial.print((distance / 25.4), 2);         
 
     // Wait a bit
     delay(250);
