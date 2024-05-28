@@ -35,6 +35,7 @@ sfeTkError_t sfeQwiicUltrasonic::getDistace(uint16_t &distance)
     uint8_t rawData[2] = {0, 0};
 
     // Attempt to read the distance
+    sfeTkError_t err = _theBus->write(kQwiicUltrasonicRegisterTrigger, rawData, 2, bytesRead);
     sfeTkError_t err = _theBus->readRegisterRegion(kQwiicUltrasonicRegisterTrigger, rawData, 2, bytesRead);
 
     // Check whether the read was successful
