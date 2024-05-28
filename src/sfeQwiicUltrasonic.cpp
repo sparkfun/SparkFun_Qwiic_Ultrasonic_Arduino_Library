@@ -48,7 +48,7 @@ sfeTkError_t sfeQwiicUltrasonic::getDistace(uint16_t &distance)
     return kSTkErrOk;
 }
 
-sfeTkError_t sfeQwiicUltrasonic::triggerAndRead(uint16_t &distance)
+sfeTkError_t sfeQwiicUltrasonic::getTriggeredDistance(uint16_t &distance)
 {
     size_t bytesRead = 0;
     uint8_t rawData[2] = {0, 0};
