@@ -11,6 +11,7 @@
  *
  * Copyright (c) 2024 SparkFun Electronics
  */
+#include "SparkFun_Qwiic_Ultrasonic_Arduino_Library.h"
 
 // Create an ultrasonic sensor object
 QwiicUltrasonic myUltrasonic;
@@ -39,9 +40,9 @@ void setup() {
   // Attempt to begin the sensor
   if (myUltrasonic.begin(deviceAddress) == false)
   {
-      Serial.println("Ultrasonic sensor not connected, check your wiring and I2C address!");
-      while(1)       
-        ;
+    Serial.println("Ultrasonic sensor not connected, check your wiring and I2C address!");
+    while(1)       
+      ;
   }
 
   Serial.println("Ultrasonic sensor connected!");
