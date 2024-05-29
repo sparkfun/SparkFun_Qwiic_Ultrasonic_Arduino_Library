@@ -12,7 +12,7 @@
  * Copyright (c) 2024 SparkFun Electronics
  */
 
-#include "SparkFun_Qwiic_Ultrasonic_Arduino_Library.h"/*
+#include "SparkFun_Qwiic_Ultrasonic_Arduino_Library.h"
 
 // Create an ultrasonic sensor object
 QwiicUltrasonic myUltrasonic;
