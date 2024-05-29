@@ -1,3 +1,14 @@
+/* SparkFun Ulrasonic Distance Sensor 
+ * 
+ * Product: 
+ *  *  SparkFun Qwiic Ultrasonic Distance Sensor - HC-SR04 (SEN-1XXXX)
+ *  *  https://www.sparkfun.com/1XXXX
+ * 
+ * SPDX-License-Identifier: MIT
+ *
+ * Copyright (c) 2024 SparkFun Electronics
+ */
+
 #pragma once
 
 #include "Arduino.h"

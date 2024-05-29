@@ -1,4 +1,16 @@
+/* SparkFun Ulrasonic Distance Sensor 
+ * 
+ * Product: 
+ *  *  SparkFun Qwiic Ultrasonic Distance Sensor - HC-SR04 (SEN-1XXXX)
+ *  *  https://www.sparkfun.com/1XXXX
+ * 
+ * SPDX-License-Identifier: MIT
+ *
+ * Copyright (c) 2024 SparkFun Electronics
+ */
+
 #include "sfeQwiicUltrasonic.h"
+#include <cstdint>
 
 sfeTkError_t sfeQwiicUltrasonic::begin(sfeTkII2C *theBus)
 {
@@ -29,15 +41,14 @@ sfeTkError_t sfeQwiicUltrasonic::isConnected()
     return _theBus->ping();
 }
 
-sfeTkError_t sfeQwiicUltrasonic::getDistace(uint16_t &distance)
+sfeTkError_t sfeQwiicUltrasonic::getDistance(uint16_t &distance)
 {
     size_t bytesRead = 0;
     uint8_t rawData[2] = {0, 0};
     sfeTkError_t err;
 
-    _theBus->writeRegisterByte(theBus->address(), kUltrasonicDistanceReadCommand);
-    delay(10);
-    err = _theBus->readRegisterRegion(kQwiicUltrasonicRegisterTrigger, rawData, 2, bytesRead);
+    _theBus->writeByte(kUltrasonicDistanceReadCommand);
+    err = _theBus->readRegisterRegion(_theBus->address(), rawData, 2, bytesRead);
 
     // Check whether the read was successful
     if (err != kSTkErrOk)
@@ -56,7 +67,7 @@ sfeTkError_t sfeQwiicUltrasonic::getTriggeredDistance(uint16_t &distance)
     uint8_t rawData[2] = {0, 0};
 
     // Attempt to read the distance
-    sfeTkError_t err = _theBus->readRegisterRegion(kQwiicUltrasonicRegisterTrigger, rawData, 2, bytesRead);
+    sfeTkError_t err = _theBus->readRegisterRegion(_theBus->address(), rawData, 2, bytesRead);
 
     // Check whether the read was successful
     if (err != kSTkErrOk)
@@ -78,8 +89,7 @@ sfeTkError_t sfeQwiicUltrasonic::changeAddress(const uint8_t &address)
         return kSTkErrFail;
 
     // Write the new address to the device. The first bit must be set to 1
-    _theBus->writeRegisterByte(_theBus->address(), kUltrasonicAddressChangeCommand);
-    err = _theBus->writeRegisterByte(_theBus->address(), address << 1);
+    err = _theBus->writeRegisterByte(kUltrasonicAddressChangeCommand, (address<< 1));
 
     // Check whether the write was successful
     if (err != kSTkErrOk)
