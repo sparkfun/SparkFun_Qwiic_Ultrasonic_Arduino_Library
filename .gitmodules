@@ -1,0 +1,3 @@
+[submodule "src/bus"]
+  path = src/bus 
+  url = https://github.com/sparkfun/SparkFun_Toolkit.git
