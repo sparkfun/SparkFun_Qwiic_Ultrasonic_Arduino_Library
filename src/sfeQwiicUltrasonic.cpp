@@ -10,7 +10,6 @@
  */
 
 #include "sfeQwiicUltrasonic.h"
-#include <cstdint>
 
 sfeTkError_t sfeQwiicUltrasonic::begin(sfeTkII2C *theBus)
 {
