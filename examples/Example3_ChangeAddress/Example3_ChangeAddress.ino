@@ -25,7 +25,9 @@ QwiicUltrasonic myUltrasonic;
 // Example 2 to change the address to the new default.
 uint8_t deviceAddress = kQwiicUltrasonicDefaultAddress; // 0x2F
 // uint8_t deviceAddress = 0x00;
-const uint8_t NEW_ADDR = 0x1E;
+
+// New addres is 7-bit unshifted.
+uint8_t NEW_ADDR = 0x1E;
 
 void setup()
 {

@@ -1,8 +1,28 @@
 /*
 sfeTkArdI2C.cpp
+The MIT License (MIT)
+
+Copyright (c) 2023 SparkFun Electronics
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions: The
+above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED
+"AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 */
 
 #include "sfeTkArdI2C.h"
+#include <cstdint>
 
 //---------------------------------------------------------------------------------
 // init()
@@ -68,7 +88,7 @@ sfeTkError_t sfeTkArdI2C::ping()
 //---------------------------------------------------------------------------------
 // writeByte()
 //
-// Writes a single byte to the device.
+// Sends a single byte to the device.
 //
 // Returns true on success, false on failure
 //
@@ -80,6 +100,41 @@ sfeTkError_t sfeTkArdI2C::writeByte(uint8_t dataToWrite)
     // do the Arduino I2C work
     _i2cPort->beginTransmission(address());
     _i2cPort->write(dataToWrite);
+    return _i2cPort->endTransmission() == 0 ? kSTkErrOk : kSTkErrFail;
+}
+
+//---------------------------------------------------------------------------------
+// writeWord()
+//
+// Sends a word to the device.
+//
+// Returns true on success, false on failure
+//
+sfeTkError_t sfeTkArdI2C::writeWord(uint16_t dataToWrite)
+{
+    if (!_i2cPort)
+        return kSTkErrBusNotInit;
+
+    return writeBlock((uint8_t *)&dataToWrite, sizeof(uint16_t));
+}
+
+//---------------------------------------------------------------------------------
+// writeBlock()
+//
+// Sends an array of data to the device.
+//
+// Returns true on success, false on failure
+//
+sfeTkError_t sfeTkArdI2C::writeBlock(const uint8_t *data, size_t length)
+{
+    int nData = 0; 
+    if (!_i2cPort)
+        return kSTkErrBusNotInit;
+
+    // do the Arduino I2C work
+    _i2cPort->beginTransmission(address());
+    _i2cPort->write(data, (int)length);
+
     return _i2cPort->endTransmission() == 0 ? kSTkErrOk : kSTkErrFail;
 }
 

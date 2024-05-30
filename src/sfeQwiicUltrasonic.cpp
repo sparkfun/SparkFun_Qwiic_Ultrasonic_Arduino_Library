@@ -1,9 +1,9 @@
-/* SparkFun Ulrasonic Distance Sensor 
- * 
- * Product: 
+/* SparkFun Ulrasonic Distance Sensor
+ *
+ * Product:
  *  *  SparkFun Qwiic Ultrasonic Distance Sensor - HC-SR04 (SEN-1XXXX)
  *  *  https://www.sparkfun.com/1XXXX
- * 
+ *
  * SPDX-License-Identifier: MIT
  *
  * Copyright (c) 2024 SparkFun Electronics
@@ -80,16 +80,20 @@ sfeTkError_t sfeQwiicUltrasonic::getTriggeredDistance(uint16_t &distance)
     return kSTkErrOk;
 }
 
-sfeTkError_t sfeQwiicUltrasonic::changeAddress(const uint8_t &address)
+sfeTkError_t sfeQwiicUltrasonic::changeAddress(uint8_t &address)
 {
     // Check whether the address is valid
     sfeTkError_t err;
+    size_t numBytes = 2;
+    address <<= 1;
+    const uint8_t toWrite[2] = {kUltrasonicAddressChangeCommand, address};
 
     if (address < kQwiicUltrasonicMinAddress || address > kQwiicUltrasonicMaxAddress)
         return kSTkErrFail;
 
     // Write the new address to the device. The first bit must be set to 1
-    err = _theBus->writeRegisterByte(kUltrasonicAddressChangeCommand, (address<< 1));
+    // err = _theBus->writeRegisterByte(kUltrasonicAddressChangeCommand, (address<< 1));
+    err = _theBus->writeBlock(toWrite, numBytes);
 
     // Check whether the write was successful
     if (err != kSTkErrOk)

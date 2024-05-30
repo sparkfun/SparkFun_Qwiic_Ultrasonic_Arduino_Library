@@ -52,7 +52,7 @@ class sfeQwiicUltrasonic
     /// @brief Changes the I2C address of the Qwiic Ultrasonic sensor
     /// @param address New address, must be in the range 0x20 to 0x2F
     /// @return 0 for succuss, negative for errors, positive for warnings
-    sfeTkError_t changeAddress(const uint8_t &address);
+    sfeTkError_t changeAddress(uint8_t &address);
 
     /// @brief Gets the current I2C address being used by the library for the Qwiic Ultrasonic sensor
     /// @return The current I2C address, 7-bit unshifted

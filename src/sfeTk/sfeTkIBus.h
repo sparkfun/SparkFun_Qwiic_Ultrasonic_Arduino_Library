@@ -96,6 +96,24 @@ class sfeTkIBus
     virtual sfeTkError_t writeByte(uint8_t data) = 0;
 
     /**--------------------------------------------------------------------------
+     *  @brief Write a single byte to the device*
+     *  @param data Data to write.
+     *
+     *  @retval sfeTkError_t -  kSTkErrOk on successful execution.
+     *
+     */
+    virtual sfeTkError_t writeWord(uint16_t data) = 0;
+
+    /**--------------------------------------------------------------------------
+     *  @brief Write a single byte to the device*
+     *  @param data Data to write.
+     *
+     *  @retval sfeTkError_t -  kSTkErrOk on successful execution.
+     *
+     */
+    virtual sfeTkError_t writeBlock(const uint8_t *data, size_t length) = 0;
+
+    /**--------------------------------------------------------------------------
      *  @brief Write a single byte to the given register
      *
      *   @param devReg The device's register's address.
