@@ -60,7 +60,7 @@ void loop() {
     distanceRequested = 1;
   }
 
-  if (digitalRead(echoPin) == LOW) {
+  if (digitalRead(echoPin) == HIGH) {
 
     uint16_t distance = 0;
     myUltrasonic.getTriggeredDistance(distance);
