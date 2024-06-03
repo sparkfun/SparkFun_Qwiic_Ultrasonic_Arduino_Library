@@ -84,6 +84,7 @@ sfeTkError_t sfeQwiicUltrasonic::changeAddress(uint8_t &address)
     // Check whether the address is valid
     sfeTkError_t err;
     size_t numBytes = 2;
+    // We want to shift the address left before we send it. 
     address <<= 1;
     const uint8_t toWrite[2] = {kUltrasonicAddressChangeCommand, address};
 

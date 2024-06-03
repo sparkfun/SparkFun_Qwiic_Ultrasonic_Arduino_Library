@@ -37,41 +37,35 @@ void setup()
 
   Wire.begin();
 
+  // This sketch wont' run until you open the serial monitor
   while(!Serial)
     ; 
 
   // Attempt to begin the sensor
-  if (myUltrasonic.begin(deviceAddress) == false)
+  if (myUltrasonic.begin(kQwiicUltrasonicDefaultAddress) == false )
   {
     Serial.println("Ultrasonic sensor not connected, check your wiring and I2C address!");
-    while(1)
-      ;
   }
 
   Serial.println("Ready to change address.");
   delay(1000);
 
-}
-
-void loop()
-{
   Serial.print("Changing Address To: ");
   Serial.println(NEW_ADDR, HEX);
+
   // Call change address.....
   myUltrasonic.changeAddress(NEW_ADDR);
   delay(1000);
   
-  Serial.println("Attempting to communicate with new address...");
-  if (myUltrasonic.begin(NEW_ADDR) == false)
-  {
-    Serial.println("Ultrasonic sensor address did not change, ensure you picked a viable address.");
-    while(1)
-      ;
-  }
-  
-  Serial.println("Address changed successfully: ");
-  Serial.println(NEW_ADDR, HEX);
 
+  Serial.print("Load up example 1 with the new address at: ");
+  Serial.println(NEW_ADDR, HEX);
+  Serial.println("Freezing....");
   while(1)
     ;
+
+}
+
+void loop()
+{
 }
