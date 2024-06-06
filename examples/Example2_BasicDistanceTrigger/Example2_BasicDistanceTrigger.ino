@@ -38,11 +38,10 @@ void setup() {
   pinMode(echoPin, INPUT);
 
   // Attempt to begin the sensor
-  if (myUltrasonic.begin(deviceAddress) == false)
+  while (myUltrasonic.begin(deviceAddress) == false)
   {
     Serial.println("Ultrasonic sensor not connected, check your wiring and I2C address!");
-    while(1)       
-      ;
+    delay(2000);
   }
 
   Serial.println("Ultrasonic sensor connected!");
