@@ -1,4 +1,4 @@
-/* SparkFun Ulrasonic Distance Sensor - Example 3 Changing the Ultrasonic's Address
+/* SparkFun Ulrasonic Distance Sensor - Example 4 Changing the Ultrasonic's Address
  * To reset the original I2C address, ground the "RST" pad on the backside of the board.
  * by touching a wire to the pad and then to ground. The address will be reset to 0x2F.
  * 

@@ -1,4 +1,4 @@
-/* SparkFun Ulrasonic Distance Sensor - Example 4 Basic Distance Sensing on an OLED Display
+/* SparkFun Ulrasonic Distance Sensor - Example 2 Basic Distance Sensing on an OLED Display
  * 
  * Products: 
  *  *  SparkFun Qwiic Ultrasonic Distance Sensor - HC-SR04 (SEN-1XXXX)

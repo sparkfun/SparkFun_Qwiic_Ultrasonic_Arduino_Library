@@ -1,4 +1,4 @@
-/* SparkFun Ulrasonic Distance Sensor - Example 2 Basic Distance Sensing using Trigger and Echo Pins.
+/* SparkFun Ulrasonic Distance Sensor - Example 3 - Distance using Trigger and Echo Pins
  * 
  * Product: 
  *  *  SparkFun Qwiic Ultrasonic Distance Sensor - HC-SR04 (SEN-1XXXX)
@@ -23,9 +23,15 @@ QwiicUltrasonic myUltrasonic;
 uint8_t deviceAddress = kQwiicUltrasonicDefaultAddress; // 0x2F
 // uint8_t deviceAddress = 0x00;
 
+// Adjust these to your setup.
 const int triggerPin = 7; // Trigger Pin of Ultrasonic Sensor
 const int echoPin = 8; // Echo Pin of Ultrasonic Sensor
-int distanceRequested = 0;
+
+// Used for distance calculation
+float distance = 0.0;
+float duration = 0.0;
+const float speedOfSound = 340.00; // Speed of sound in m/s
+const float convMilli= 1000.00; // Speed of sound in m/s
      
 void setup() {
 
@@ -49,32 +55,26 @@ void setup() {
 
 void loop() {
 
-  if(distanceRequested == 0)
-  {    
-    // To trigger we write the pin high and then back to its resting state.
-    digitalWrite(triggerPin, HIGH);
-    delay(5);
-    digitalWrite(triggerPin, LOW);
-    // We don't want continually trigger while data is being retrieved from the sensor.
-    distanceRequested = 1;
-  }
+  digitalWrite(triggerPin, HIGH);
+  delay(5);
+  digitalWrite(triggerPin, LOW);
+  // We don't want continually trigger while data is being retrieved from the sensor.
 
-  if (digitalRead(echoPin) == HIGH) {
+  duration = pulseIn(echoPin, HIGH);
+  // Time until sound detected * speed of sound * conversion to mm 
+  // Divide by two because we only want the time the wave traveled to the object, 
+  // not to the object and back.
+  distance = (duration * speedOfSound * convMilli) / 2; 
 
-    uint16_t distance = 0;
-    myUltrasonic.getTriggeredDistance(distance);
+  // Print measurement
+  Serial.print("Distance (mm): ");
+  Serial.println(distance);
 
-    // Print measurement
-    Serial.print("Distance (mm): ");
-    Serial.println(distance);
+  //Serial.println("Distance (cm): "); 
+  //Serial.print((distance / 10.0), 2);         
 
-    //Serial.println("Distance (cm): "); 
-    //Serial.print((distance / 10.0), 2);         
+  //Serial.println("Distace (in): "); 
+  //Serial.print((distance / 25.4), 2);         
 
-    //Serial.println("Distace (in): "); 
-    //Serial.print((distance / 25.4), 2);         
-
-    distanceRequested = 0;
-  }
   delay(500);
 }
