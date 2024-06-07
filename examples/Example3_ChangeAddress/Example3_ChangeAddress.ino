@@ -28,6 +28,9 @@ uint8_t deviceAddress = kQwiicUltrasonicDefaultAddress; // 0x2F
 
 // New addres is 7-bit unshifted.
 uint8_t NEW_ADDR = 0x1E;
+//If using an older version of the Qwiic Ultrasonic, your address range is: 0x20 - 0x2F
+//uint8_t NEW_ADDR = 0x2F;
+
 
 void setup()
 {
@@ -54,9 +57,24 @@ void setup()
   Serial.print("Changing Address To: ");
   Serial.println(NEW_ADDR, HEX);
 
+
   // Call change address.....
-  myUltrasonic.changeAddress(NEW_ADDR);
+  sfeTkError_t err =  myUltrasonic.updateAddress(NEW_ADDR);
+  // If you have an older version of the Qwiic Ultrasonic, you'll need to use the following:
+  //sfeTkError_t err =  myUltrasonic.changeAddress(NEW_ADDR);
+
+  if(err)
+  {
+    while(1)
+    {
+      Serial.print("Error changing address: ");
+      Serial.println(err);
+      delay(1000);
+    }
+  }
   delay(1000);
+
+  // I
   
 
   Serial.print("Load up example 1 with the new address at: ");
