@@ -5,6 +5,8 @@
  *  *  https://www.sparkfun.com/1XXXX
  *  *  SparkFun Qwiic Narrow OLED Display (LCD-1XXXX)
  *  *  https://www.sparkfun.com/1XXXX
+ *
+ * Link to OLED library: https://github.com/sparkfun/SparkFun_Qwiic_OLED_Arduino_Library
  * 
  * Written By: Elias Santistevan
  * Date: 06/2024
