@@ -48,17 +48,16 @@ void setup()
   Serial.println("Ultrasonic Distance Sensor - Example 4 - Distance on an OLED Display");
   Wire.begin();
 
-  if (myOLED.begin() == false) {
+  while (myOLED.begin() == false) {
     Serial.println("OLED sensor not connected, check your wiring and I2C address!");
-    while (1) 
-        ;
+    delay(1000);
   }
-  if (myUltrasonic.begin(deviceAddress) == false)
+  while(myUltrasonic.begin(deviceAddress) == false)
   {
     Serial.println("Ultrasonic sensor not connected, check your wiring and I2C address!");
-    while(1)
-      ;
+    delay(1000);
   }
+
   String hello = "Hello, Ultrasonic!";
 
   // This is good for the narrow OLED screen. You can also just remove this 
@@ -82,7 +81,7 @@ void loop()
   myUltrasonic.getDistance(distance);
 
   // Convert distance, which is an integer, to char so that we can print it.
-  itoa(distance, distanceBuff, 10);
+  snprintf(distanceBuff, 4, "%d", distance);
 
   // Put the distance in a string so that we can also print "mm".
   distanceStr = distanceBuff; 
