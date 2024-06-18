@@ -26,7 +26,8 @@ const uint8_t kQwiicUltrasonicFWOld = 0x01;
 // be used for the newest revision of the Qwiic Ultrasonic sensor.
 const uint8_t kQwiicUltrasonicI2CAddressMin = 0x08;
 const uint8_t kQwiicUltrasonicI2CAddressMax = 0x7F;
-// Available I2C addresses of the Qwiic Ultrasonic
+
+// Available I2C addresses of the older SparkFun Qwiic Ultrasonic Sensor.
 const uint8_t kQwiicUltrasonicMinAddress = 0x20;
 const uint8_t kQwiicUltrasonicMaxAddress = 0x2F;
 ;
