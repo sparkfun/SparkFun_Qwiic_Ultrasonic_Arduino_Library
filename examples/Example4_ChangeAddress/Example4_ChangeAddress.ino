@@ -17,7 +17,7 @@
 #include "SparkFun_Qwiic_Ultrasonic_Arduino_Library.h"
 
 // Create an ultrasonic sensor object
-QwiicUltrasonic myUltrasonic;
+QwiicUltrasonic myUltrasonic(kQwiicUltrasonicFWLatest);
 
 // Here we set the device address. Note that an older version of the Qwiic
 // Ultrasonic firmware used a default address of 0x00. If yours uses 0x00,
@@ -27,9 +27,9 @@ uint8_t deviceAddress = kQwiicUltrasonicDefaultAddress; // 0x2F
 // uint8_t deviceAddress = 0x00;
 
 // New addres is 7-bit unshifted.
-uint8_t NEW_ADDR = 0x1E;
+uint8_t newAddr = 0x20;
 //If using an older version of the Qwiic Ultrasonic, your address range is: 0x20 - 0x2F
-//uint8_t NEW_ADDR = 0x2F;
+//uint8_t newAddr = 0x2F;
 
 
 void setup()
@@ -55,13 +55,11 @@ void setup()
   delay(1000);
 
   Serial.print("Changing Address To: ");
-  Serial.println(NEW_ADDR, HEX);
+  Serial.println(newAddr, HEX);
 
 
   // Call change address.....
-  sfeTkError_t err =  myUltrasonic.updateAddress(NEW_ADDR);
-  // If you have an older version of the Qwiic Ultrasonic, you'll need to use the following:
-  //sfeTkError_t err =  myUltrasonic.changeAddress(NEW_ADDR);
+  sfeTkError_t err =  myUltrasonic.changeAddress(newAddr);
 
   if(err)
   {
@@ -74,11 +72,8 @@ void setup()
   }
   delay(1000);
 
-  // I
-  
-
   Serial.print("Load up example 1 with the new address at: ");
-  Serial.println(NEW_ADDR, HEX);
+  Serial.println(newAddr, HEX);
   Serial.println("Freezing....");
   while(1)
     ;

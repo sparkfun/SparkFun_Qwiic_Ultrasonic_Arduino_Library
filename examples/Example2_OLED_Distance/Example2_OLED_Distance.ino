@@ -23,11 +23,8 @@
 #include "res/qw_fnt_8x16.h"
 #include "SparkFun_Qwiic_Ultrasonic_Arduino_Library.h"
 
-const int TRIG_PIN = 7;
-const int ECHO_PIN = 8;
-
 // Create an ultrasonic sensor object
-QwiicUltrasonic myUltrasonic;
+QwiicUltrasonic myUltrasonic(kQwiicUltrasonicFWLatest);
 // Creat an OLED object
 QwiicNarrowOLED myOLED;
 

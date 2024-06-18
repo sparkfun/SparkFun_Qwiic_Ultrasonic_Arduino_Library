@@ -31,7 +31,7 @@ const int echoPin = 8; // Echo Pin of Ultrasonic Sensor
 float distance = 0.0;
 float duration = 0.0;
 const float speedOfSound = 340.00; // Speed of sound in m/s
-const float convMilli= 1000.00; // Speed of sound in m/s
+const float millisPerSecond= 1000.00; // Number of milliseconds in a second
      
 void setup() {
 
@@ -64,7 +64,7 @@ void loop() {
   // Time until sound detected * speed of sound * conversion to mm 
   // Divide by two because we only want the time the wave traveled to the object, 
   // not to the object and back.
-  distance = (duration * speedOfSound * convMilli) / 2; 
+  distance = (duration * speedOfSound * millisPerSecond) / 2; 
 
   // Print measurement
   Serial.print("Distance (mm): ");
