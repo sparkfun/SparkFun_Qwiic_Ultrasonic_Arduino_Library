@@ -19,9 +19,8 @@ sfeTkError_t sfeQwiicUltrasonic::begin(sfeTkII2C *theBus)
         return kSTkErrFail;
 
     // Check the device address
-    if(_fwVersion == kQwiicUltrasonicFWOld)
+    if (_fwVersion == kQwiicUltrasonicFWOld)
     {
-
         if (theBus->address() < kQwiicUltrasonicMinAddress || theBus->address() > kQwiicUltrasonicMaxAddress)
         {
             // An older version of the firmware used 0x00 as the default address.
@@ -70,7 +69,7 @@ sfeTkError_t sfeQwiicUltrasonic::changeAddress(uint8_t &address)
 
     sfeTkError_t err;
 
-    if(_fwVersion == kQwiicUltrasonicFWOld)
+    if (_fwVersion == kQwiicUltrasonicFWOld)
     {
         // Old firmware only supports a limited range of addresses.
         if (address < kQwiicUltrasonicMinAddress || address > kQwiicUltrasonicMaxAddress)
@@ -79,7 +78,7 @@ sfeTkError_t sfeQwiicUltrasonic::changeAddress(uint8_t &address)
         // Write the new address to the device. The first bit must be set to 1
         err = _theBus->writeByte(address | 0x80);
     }
-    else if(_fwVersion == kQwiicUltrasonicFWLatest)
+    else if (_fwVersion == kQwiicUltrasonicFWLatest)
     {
         size_t numBytes = 2;
         // Latest firmware versions supports all of the available I2C addresses.
@@ -90,13 +89,14 @@ sfeTkError_t sfeQwiicUltrasonic::changeAddress(uint8_t &address)
         address <<= 1;
         const uint8_t toWrite[2] = {kUltrasonicAddressChangeCommand, address};
 
-        //Write the new address to the device
+        // Write the new address to the device
         err = _theBus->writeRegion(toWrite, numBytes);
     }
-    else {
-        //There was some error setting the version in the constructor
-        //return an error.
-        return kSTkErrOk;
+    else
+    {
+        // There was some error setting the version in the constructor
+        // return an error.
+        return kSTkErrFail;
     }
 
     // Check whether the write was successful

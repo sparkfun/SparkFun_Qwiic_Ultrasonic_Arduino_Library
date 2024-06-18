@@ -12,12 +12,15 @@
 #pragma once
 
 #include "SparkFun_Toolkit.h"
+#include <cstdint>
 
 // Available I2C addresses of the Qwiic Ultrasonic
 const uint8_t kQwiicUltrasonicDefaultAddress = 0x2F;
 
-const uint8_t kQwiicUltrasonicFWLatest = 0x01;
-const uint8_t kQwiicUltrasonicFWOld = 0x10;
+// Firmware versions. The later hardware version is v10 and so the "latest" here
+// refers to that. The previous version is randomnly given the value v01.
+const uint8_t kQwiicUltrasonicFWLatest = 0x10;
+const uint8_t kQwiicUltrasonicFWOld = 0x01;
 
 // These addresses are the min and max (respectively) of valid I2C addresses that can
 // be used for the newest revision of the Qwiic Ultrasonic sensor.
@@ -35,15 +38,17 @@ class sfeQwiicUltrasonic
 {
   public:
     /// @brief Default constructor
+    ///
     sfeQwiicUltrasonic() : _theBus(nullptr), _fwVersion(kQwiicUltrasonicFWLatest)
     {
     }
 
-    /// @brief Default constructor
-   sfeQwiicUltrasonic(const uint8_t fwVersion) : _theBus(nullptr), _fwVersion(fwVersion)
-   {
-   }
-
+    /// @brief Alternate constructor
+    /// @param fwVersion Firmware version of the Qwiic Ultrasonic Sensor. If using an older version
+    ///         of the sensor, the list of available I2C addresses differs.
+    sfeQwiicUltrasonic(const uint8_t fwVersion) : _theBus(nullptr), _fwVersion(fwVersion)
+    {
+    }
 
     /// @brief Begins the Qwiic Ultrasonic sensor
     /// @param theBus I2C bus to use for communication

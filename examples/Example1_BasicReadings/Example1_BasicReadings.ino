@@ -28,7 +28,7 @@ void setup()
 {
   // Start serial
   Serial.begin(115200);
-  Serial.println("Ultrasonic Distance Sensor Example 1 - Basic Distance Sensing");
+  Serial.println("Ultrasonic Distance Sensor Example 1 - Basic Readings");
 
   Wire.begin();
 

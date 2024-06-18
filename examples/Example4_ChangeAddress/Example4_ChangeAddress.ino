@@ -20,6 +20,8 @@
 QwiicUltrasonic myUltrasonic;
 // If you're using the older version of the Ultrasonic Distance
 // sensor, then uncomment the line below and comment out the line above.
+// You can check the version in copper by the "R" on the front of the board.
+// Newer versions are >v10 and older versions simply do not have a version number.
 //QwiicUltrasonic myUltrasonic(kQwiicUltrasonicFWOld);
 
 // Here we set the device address. Note that an older version of the Qwiic
