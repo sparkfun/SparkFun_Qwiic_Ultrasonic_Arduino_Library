@@ -51,7 +51,6 @@ sfeTkError_t sfeQwiicUltrasonic::getDistance(uint16_t &distance)
     uint8_t rawData[2] = {};
 
     // Get the distance
-    //sfeTkError_t err = _theBus->readBlock(kUltrasonicDistanceReadCommand, rawData, numBytes, bytesRead);
     sfeTkError_t err = _theBus->readRegisterRegion(kUltrasonicDistanceReadCommand, rawData, numBytes, bytesRead);
 
     // Check whether the read was successful
@@ -92,7 +91,7 @@ sfeTkError_t sfeQwiicUltrasonic::changeAddress(uint8_t &address)
         const uint8_t toWrite[2] = {kUltrasonicAddressChangeCommand, address};
 
         //Write the new address to the device
-        err = _theBus->writeBlock(toWrite, numBytes);
+        err = _theBus->writeRegion(toWrite, numBytes);
     }
     else {
         //There was some error setting the version in the constructor
