@@ -17,7 +17,10 @@
 #include "SparkFun_Qwiic_Ultrasonic_Arduino_Library.h"
 
 // Create an ultrasonic sensor object
-QwiicUltrasonic myUltrasonic(kQwiicUltrasonicFWLatest);
+QwiicUltrasonic myUltrasonic;
+// If you're using the older version of the Ultrasonic Distance
+// sensor, then uncomment the line below and comment out the line above.
+//QwiicUltrasonic myUltrasonic(kQwiicUltrasonicFWOld);
 
 // Here we set the device address. Note that an older version of the Qwiic
 // Ultrasonic firmware used a default address of 0x00. If yours uses 0x00,

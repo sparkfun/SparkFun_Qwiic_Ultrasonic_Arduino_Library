@@ -40,7 +40,7 @@ class sfeQwiicUltrasonic
     }
 
     /// @brief Default constructor
-   sfeQwiicUltrasonic(uint8_t fwVersion) : _theBus(nullptr), _fwVersion(fwVersion)
+   sfeQwiicUltrasonic(const uint8_t fwVersion) : _theBus(nullptr), _fwVersion(fwVersion)
    {
    }
 

@@ -24,7 +24,7 @@
 #include "SparkFun_Qwiic_Ultrasonic_Arduino_Library.h"
 
 // Create an ultrasonic sensor object
-QwiicUltrasonic myUltrasonic(kQwiicUltrasonicFWLatest);
+QwiicUltrasonic myUltrasonic;
 // Creat an OLED object
 QwiicNarrowOLED myOLED;
 
@@ -80,7 +80,7 @@ void loop()
   myUltrasonic.getDistance(distance);
 
   // Convert distance, which is an integer, to char so that we can print it.
-  snprintf(distanceBuff, 4, "%d", distance);
+  snprintf(distanceBuff, 6, "%d", distance);
 
   // Put the distance in a string so that we can also print "mm".
   distanceStr = distanceBuff; 
