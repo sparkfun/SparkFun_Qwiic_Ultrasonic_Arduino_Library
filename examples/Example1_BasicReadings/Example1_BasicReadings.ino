@@ -45,7 +45,7 @@ void setup()
 void loop()
 {
   uint16_t distance = 0;
-  myUltrasonic.getDistance(distance);
+  myUltrasonic.triggerAndRead(distance);
 
   // Print measurement
   Serial.print("Distance (mm): ");

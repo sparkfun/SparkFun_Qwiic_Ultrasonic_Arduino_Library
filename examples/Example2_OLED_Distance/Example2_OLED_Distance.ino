@@ -77,7 +77,7 @@ void setup()
 void loop() 
 {
   uint16_t distance = 0;
-  myUltrasonic.getDistance(distance);
+  myUltrasonic.triggerAndRead(distance);
 
   // Convert distance, which is an integer, to char so that we can print it.
   snprintf(distanceBuff, 6, "%d", distance);

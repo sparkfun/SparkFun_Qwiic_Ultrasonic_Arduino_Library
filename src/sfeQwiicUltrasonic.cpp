@@ -43,7 +43,7 @@ sfeTkError_t sfeQwiicUltrasonic::isConnected()
     return _theBus->ping();
 }
 
-sfeTkError_t sfeQwiicUltrasonic::getDistance(uint16_t &distance)
+sfeTkError_t sfeQwiicUltrasonic::triggerAndRead(uint16_t &distance)
 {
     size_t bytesRead;
     size_t numBytes = 2;
