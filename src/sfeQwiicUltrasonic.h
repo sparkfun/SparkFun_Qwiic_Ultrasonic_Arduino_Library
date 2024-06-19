@@ -12,7 +12,6 @@
 #pragma once
 
 #include "SparkFun_Toolkit.h"
-#include <cstdint>
 
 // Available I2C addresses of the Qwiic Ultrasonic
 const uint8_t kQwiicUltrasonicDefaultAddress = 0x2F;
