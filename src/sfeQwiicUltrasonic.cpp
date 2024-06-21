@@ -86,8 +86,8 @@ sfeTkError_t sfeQwiicUltrasonic::changeAddress(uint8_t &address)
             return kSTkErrFail;
 
         // We want to shift the address left before we send it.
-        address <<= 1;
-        const uint8_t toWrite[2] = {kUltrasonicAddressChangeCommand, address};
+        uint8_t tempAddress = address << 1;
+        const uint8_t toWrite[2] = {kUltrasonicAddressChangeCommand, tempAddress};
 
         // Write the new address to the device
         err = _theBus->writeRegion(toWrite, numBytes);
@@ -99,12 +99,10 @@ sfeTkError_t sfeQwiicUltrasonic::changeAddress(uint8_t &address)
         return kSTkErrFail;
     }
 
+    _theBus->setAddress(address);
     // Check whether the write was successful
     if (err != kSTkErrOk)
         return err;
-
-    // Update the address in the bus
-    _theBus->setAddress(address);
 
     // Done!
     return kSTkErrOk;

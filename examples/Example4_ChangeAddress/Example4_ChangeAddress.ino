@@ -66,6 +66,7 @@ void setup()
   // Call change address.....
   sfeTkError_t err =  myUltrasonic.changeAddress(newAddr);
 
+
   if(err)
   {
     while(1)
@@ -75,16 +76,28 @@ void setup()
       delay(1000);
     }
   }
-  delay(1000);
 
-  Serial.print("Load up example 1 with the new address at: ");
-  Serial.println(newAddr, HEX);
-  Serial.println("Freezing....");
-  while(1)
-    ;
+  Serial.println("Address changed successfully!");
+  Serial.println("Reading Distance at new address......");
+  delay(3000);
 
 }
 
 void loop()
 {
+  uint16_t distance = 0;
+  myUltrasonic.triggerAndRead(distance);
+
+  // Print measurement
+  Serial.print("Distance (mm): ");
+  Serial.println(distance);
+
+  //Serial.println("Distance (cm): "); 
+  //Serial.print((distance / 10.0), 2);         
+
+  //Serial.println("Distace (in): "); 
+  //Serial.print((distance / 25.4), 2);         
+
+  // Wait a bit
+  delay(100);
 }
