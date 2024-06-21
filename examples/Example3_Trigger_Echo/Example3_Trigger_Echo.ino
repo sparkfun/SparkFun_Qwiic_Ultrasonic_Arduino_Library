@@ -1,4 +1,4 @@
-/* SparkFun Ulrasonic Distance Sensor - Example 1 Basic Distance Sensing
+/* SparkFun Ulrasonic Distance Sensor - Example 3 - Distance using Trigger and Echo Pins
  * 
  * Product: 
  *  *  SparkFun Qwiic Ultrasonic Distance Sensor - HC-SR04 (SEN-1XXXX)
@@ -11,7 +11,6 @@
  *
  * Copyright (c) 2024 SparkFun Electronics
  */
-
 #include "SparkFun_Qwiic_Ultrasonic_Arduino_Library.h"
 
 // Create an ultrasonic sensor object
@@ -24,13 +23,25 @@ QwiicUltrasonic myUltrasonic;
 uint8_t deviceAddress = kQwiicUltrasonicDefaultAddress; // 0x2F
 // uint8_t deviceAddress = 0x00;
 
-void setup()
-{
-  // Start serial
-  Serial.begin(115200);
-  Serial.println("Ultrasonic Distance Sensor Example 1 - Basic Readings");
+// Adjust these to your setup.
+const int triggerPin = 7; // Trigger Pin of Ultrasonic Sensor
+const int echoPin = 8; // Echo Pin of Ultrasonic Sensor
 
-  Wire.begin();
+// Used for distance calculation
+float distance = 0.0;
+float duration = 0.0;
+const float speedOfSound = 340.00; // Speed of sound in m/s
+const float millisPerSecond= 1000.00; // Number of milliseconds in a second
+     
+void setup() {
+
+  Wire.begin(); 
+
+  Serial.begin(115200);  
+  Serial.println("Ultrasonic Distance Sensor - Example 2 Distance using Trigger and Echo Pins.");
+
+  pinMode(triggerPin, OUTPUT);
+  pinMode(echoPin, INPUT);
 
   // Attempt to begin the sensor
   while (myUltrasonic.begin(deviceAddress) == false)
@@ -42,10 +53,18 @@ void setup()
   Serial.println("Ultrasonic sensor connected!");
 }
 
-void loop()
-{
-  uint16_t distance = 0;
-  myUltrasonic.triggerAndRead(distance);
+void loop() {
+
+  digitalWrite(triggerPin, HIGH);
+  delay(5);
+  digitalWrite(triggerPin, LOW);
+  // We don't want continually trigger while data is being retrieved from the sensor.
+
+  duration = pulseIn(echoPin, HIGH);
+  // Time until sound detected * speed of sound * conversion to mm 
+  // Divide by two because we only want the time the wave traveled to the object, 
+  // not to the object and back.
+  distance = (duration * speedOfSound * millisPerSecond) / 2; 
 
   // Print measurement
   Serial.print("Distance (mm): ");
@@ -57,6 +76,5 @@ void loop()
   //Serial.println("Distace (in): "); 
   //Serial.print((distance / 25.4), 2);         
 
-  // Wait a bit
-  delay(250);
+  delay(500);
 }
