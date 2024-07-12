@@ -1,4 +1,4 @@
-# SparkFun_Qwiic_Ultrasonic_Arduino_Library
+SparkFun_Qwiic_Ultrasonic_Arduino_Library
 ========================================
 
 <table class="table table-hover table-striped table-bordered">
