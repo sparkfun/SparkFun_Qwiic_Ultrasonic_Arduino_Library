@@ -27,8 +27,8 @@ Repository Contents
 
 Documentation
 --------------
-* **[GitHub Repo](https://github.com/sparkfun/SparkFun_Ultrasonic_Distance_Sensor-Qwiic/tree/v11_Firmware_v01)** - GitHub repo for the SparkFun Ultrasonic Distance Sensor - TCT40 (Qwiic) Hardware Files. 
-* **[Hookup Guide](https://docs.sparkfun.com/SparkFun_Ultrasonic_Distance_Sensor-Qwiic/)** - Basic hookup guide for the SparkFun Ultrasonic Distance Sensor - TCT40 (Qwiic). 
+* **[Hookup Guide](https://docs.sparkfun.com/SparkFun_Ultrasonic_Distance_Sensor-Qwiic/)** - Basic hookup guide for the SparkFun Ultrasonic Distance Sensor - TCT40 (Qwiic).
+* **[Product Repo](https://github.com/sparkfun/SparkFun_Ultrasonic_Distance_Sensor-Qwiic)** - GitHub repo for the SparkFun Ultrasonic Distance Sensor - TCT40 (Qwiic) GitHub Pages and hardware files. 
 
 License Information
 -------------------
