@@ -54,8 +54,8 @@ void loop() {
   // Serial.print("Distance (cm): ");
   // Serial.println((distance / 10.0), 2); // Print to 2 decimal places
 
-  //Serial.print("Distace (in): ");
-  //Serial.println((distance / 25.4), 2); // Print to 2 decimal places
+  // Serial.print("Distace (in): ");
+  // Serial.println((distance / 25.4), 2); // Print to 2 decimal places
 
-  delay(500);
+  delay(500); // Must be no less than 25ms to ensure full 400cm sensor range
 }
