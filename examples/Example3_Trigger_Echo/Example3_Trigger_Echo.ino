@@ -1,4 +1,4 @@
-/* SparkFun Ulrasonic Distance Sensor - Example 3 - Distance using Trigger and Echo Pins
+/* SparkFun Ultrasonic Distance Sensor - Example 3 - Distance Using Trigger and Echo Pins
  * 
  * Product: 
  *  *  SparkFun Qwiic Ultrasonic Distance Sensor - HC-SR04 (SEN-24805)
