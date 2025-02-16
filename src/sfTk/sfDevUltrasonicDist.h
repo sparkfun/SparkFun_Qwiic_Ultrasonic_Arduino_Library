@@ -1,23 +1,32 @@
-/* SparkFun Ulrasonic Distance Sensor
+/**
+ * @file sfDevUltrasonicDist.h
+ * @brief Header file for the Ultrasonic Distance sensor class
  *
- * Product:
- *  *  SparkFun Qwiic Ultrasonic Distance Sensor - HC-SR04 (SEN-1XXXX)
- *  *  https://www.sparkfun.com/1XXXX
+ * This file contains the class definition for the ultrasonic distance sensor, including
+ * methods for initialization, measuring distance values, and setting the I2C address.
+ *
+ * @author SparkFun Electronics
+ * @date 2024
+ * @copyright Copyright (c) 2024-2025, SparkFun Electronics Inc. This project is released under the MIT License.
  *
  * SPDX-License-Identifier: MIT
- *
- * Copyright (c) 2024 SparkFun Electronics
  */
 
 #pragma once
 
-#include "SparkFun_Toolkit.h"
+#include <stdint.h>
+
+// include the sparkfun toolkit headers
+#include <sfTk/sfToolkit.h>
+
+// Bus interfaces
+#include <sfTk/sfTkII2C.h>
 
 // Available I2C addresses of the Qwiic Ultrasonic
 const uint8_t kQwiicUltrasonicDefaultAddress = 0x2F;
 
 // Firmware versions. The later hardware version is v10 and so the "latest" here
-// refers to that. The previous version is randomnly given the value v01.
+// refers to that. The previous version is randomly given the value v01.
 const uint8_t kQwiicUltrasonicFWLatest = 0x10;
 const uint8_t kQwiicUltrasonicFWOld = 0x01;
 
@@ -34,47 +43,47 @@ const uint8_t kQwiicUltrasonicMaxAddress = 0x2F;
 const uint8_t kUltrasonicDistanceReadCommand = 0x01;
 const uint8_t kUltrasonicAddressChangeCommand = 0x04;
 
-class sfeQwiicUltrasonic
+class sfDevUltrasonicDist
 {
   public:
     /// @brief Default constructor
     ///
-    sfeQwiicUltrasonic() : _theBus(nullptr), _fwVersion(kQwiicUltrasonicFWLatest)
+    sfDevUltrasonicDist() : _theBus(nullptr), _fwVersion(kQwiicUltrasonicFWLatest)
     {
     }
 
     /// @brief Alternate constructor
     /// @param fwVersion Firmware version of the Qwiic Ultrasonic Sensor. If using an older version
     ///         of the sensor, the list of available I2C addresses differs.
-    sfeQwiicUltrasonic(const uint8_t fwVersion) : _theBus(nullptr), _fwVersion(fwVersion)
+    sfDevUltrasonicDist(const uint8_t fwVersion) : _theBus(nullptr), _fwVersion(fwVersion)
     {
     }
 
     /// @brief Begins the Qwiic Ultrasonic sensor
     /// @param theBus I2C bus to use for communication
-    /// @return 0 for succuss, negative for errors, positive for warnings
-    sfeTkError_t begin(sfeTkII2C *theBus = nullptr);
+    /// @return 0 for success, negative for errors, positive for warnings
+    sfTkError_t begin(sfTkII2C *theBus = nullptr);
 
     /// @brief Checks if the Qwiic Ultrasonic sensor is connected
     /// @return 0 for succuss, negative for errors, positive for warnings
-    sfeTkError_t isConnected();
+    sfTkError_t isConnected();
 
     /// @brief Triggers a new measurement and reads the previous one
     /// @param distance Distance in mm
     /// @return 0 for succuss, negative for errors, positive for warnings
-    sfeTkError_t triggerAndRead(uint16_t &distance);
+    sfTkError_t triggerAndRead(uint16_t &distance);
 
     /// @brief Changes the I2C address of older Qwiic Ultrasonic sensors.
     /// @param address New address, must be in the range 0x20 to 0x2F
     /// @return 0 for succuss, negative for errors, positive for warnings
-    sfeTkError_t changeAddress(uint8_t &address);
+    sfTkError_t changeAddress(uint8_t &address);
 
     /// @brief Gets the current I2C address being used by the library for the Qwiic Ultrasonic sensor
     /// @return The current I2C address, 7-bit unshifted
     uint8_t getAddress();
 
   protected:
-    sfeTkII2C *_theBus;
+    sfTkII2C *_theBus;
 
   private:
     uint8_t _fwVersion = 0x00;

@@ -1,22 +1,25 @@
-/* SparkFun Ulrasonic Distance Sensor
+/**
+ * @file sfDevUltrasonicDist.cpp
+ * @brief Implementation file for the Ultrasonic Distance sensor class
  *
- * Product:
- *  *  SparkFun Qwiic Ultrasonic Distance Sensor - HC-SR04 (SEN-1XXXX)
- *  *  https://www.sparkfun.com/1XXXX
+ * This file contains the implementation of the ultrasonic distance sensor class, including
+ * methods for initialization, measuring distance values, and setting the I2C address.
+ *
+ * @author SparkFun Electronics
+ * @date 2024
+ * @copyright Copyright (c) 2024-2025, SparkFun Electronics Inc. This project is released under the MIT License.
  *
  * SPDX-License-Identifier: MIT
- *
- * Copyright (c) 2024 SparkFun Electronics
  */
 
-#include "sfeQwiicUltrasonic.h"
-#include "sfeTk/sfeTkError.h"
+#include "sfDevUltrasonicDist.h"
 
-sfeTkError_t sfeQwiicUltrasonic::begin(sfeTkII2C *theBus)
+//------------------------------------------------------------------------
+sfTkError_t sfDevUltrasonicDist::begin(sfTkII2C *theBus)
 {
     // Nullptr check
     if (theBus == nullptr)
-        return kSTkErrFail;
+        return ksfTkErrFail;
 
     // Check the device address
     if (_fwVersion == kQwiicUltrasonicFWOld)
@@ -27,7 +30,7 @@ sfeTkError_t sfeQwiicUltrasonic::begin(sfeTkII2C *theBus)
             // It's not really a valid address, but we need to allow it. Any other
             // address can't be used
             if (theBus->address() != 0x00)
-                return kSTkErrFail;
+                return ksfTkErrFail;
         }
     }
     // Set bus pointer
@@ -37,43 +40,46 @@ sfeTkError_t sfeQwiicUltrasonic::begin(sfeTkII2C *theBus)
     return isConnected();
 }
 
-sfeTkError_t sfeQwiicUltrasonic::isConnected()
+//------------------------------------------------------------------------
+sfTkError_t sfDevUltrasonicDist::isConnected()
 {
     // Just ping the device address, there's no product ID register to check
     return _theBus->ping();
 }
 
-sfeTkError_t sfeQwiicUltrasonic::triggerAndRead(uint16_t &distance)
+//------------------------------------------------------------------------
+sfTkError_t sfDevUltrasonicDist::triggerAndRead(uint16_t &distance)
 {
     size_t bytesRead;
     size_t numBytes = 2;
     uint8_t rawData[2] = {};
 
     // Get the distance
-    sfeTkError_t err = _theBus->readRegisterRegion(kUltrasonicDistanceReadCommand, rawData, numBytes, bytesRead);
+    sfTkError_t err = _theBus->readRegisterRegion(kUltrasonicDistanceReadCommand, rawData, numBytes, bytesRead);
 
     // Check whether the read was successful
-    if (err != kSTkErrOk)
+    if (err != ksfTkErrOk)
         return err;
 
     // Store raw data
     distance = (rawData[0] << 8) | rawData[1];
 
     // Done!
-    return kSTkErrOk;
+    return ksfTkErrOk;
 }
 
-sfeTkError_t sfeQwiicUltrasonic::changeAddress(uint8_t &address)
+//------------------------------------------------------------------------
+sfTkError_t sfDevUltrasonicDist::changeAddress(uint8_t &address)
 {
     // Check whether the address is valid
 
-    sfeTkError_t err;
+    sfTkError_t err;
 
     if (_fwVersion == kQwiicUltrasonicFWOld)
     {
         // Old firmware only supports a limited range of addresses.
         if (address < kQwiicUltrasonicMinAddress || address > kQwiicUltrasonicMaxAddress)
-            return kSTkErrFail;
+            return ksfTkErrFail;
 
         // Write the new address to the device. The first bit must be set to 1
         err = _theBus->writeByte(address | 0x80);
@@ -83,7 +89,7 @@ sfeTkError_t sfeQwiicUltrasonic::changeAddress(uint8_t &address)
         size_t numBytes = 2;
         // Latest firmware versions supports all of the available I2C addresses.
         if (address < kQwiicUltrasonicI2CAddressMin || address > kQwiicUltrasonicI2CAddressMax)
-            return kSTkErrFail;
+            return ksfTkErrFail;
 
         // We want to shift the address left before we send it.
         uint8_t tempAddress = address << 1;
@@ -96,19 +102,17 @@ sfeTkError_t sfeQwiicUltrasonic::changeAddress(uint8_t &address)
     {
         // There was some error setting the version in the constructor
         // return an error.
-        return kSTkErrFail;
+        return ksfTkErrFail;
     }
 
     _theBus->setAddress(address);
-    // Check whether the write was successful
-    if (err != kSTkErrOk)
-        return err;
 
-    // Done!
-    return kSTkErrOk;
+    // return err
+    return err;
 }
 
-uint8_t sfeQwiicUltrasonic::getAddress()
+//------------------------------------------------------------------------
+uint8_t sfDevUltrasonicDist::getAddress()
 {
     return _theBus->address();
 }
