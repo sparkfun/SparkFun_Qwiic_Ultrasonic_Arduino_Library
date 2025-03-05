@@ -55,7 +55,7 @@ sfTkError_t sfDevUltrasonicDist::triggerAndRead(uint16_t &distance)
     uint8_t rawData[2] = {};
 
     // Get the distance
-    sfTkError_t err = _theBus->readRegisterRegion(kUltrasonicDistanceReadCommand, rawData, numBytes, bytesRead);
+    sfTkError_t err = _theBus->readRegister(kUltrasonicDistanceReadCommand, rawData, numBytes, bytesRead);
 
     // Check whether the read was successful
     if (err != ksfTkErrOk)
@@ -82,7 +82,7 @@ sfTkError_t sfDevUltrasonicDist::changeAddress(uint8_t &address)
             return ksfTkErrFail;
 
         // Write the new address to the device. The first bit must be set to 1
-        err = _theBus->writeByte(address | 0x80);
+        err = _theBus->writeUInt8(address | 0x80);
     }
     else if (_fwVersion == kQwiicUltrasonicFWLatest)
     {
@@ -96,7 +96,7 @@ sfTkError_t sfDevUltrasonicDist::changeAddress(uint8_t &address)
         const uint8_t toWrite[2] = {kUltrasonicAddressChangeCommand, tempAddress};
 
         // Write the new address to the device
-        err = _theBus->writeRegion(toWrite, numBytes);
+        err = _theBus->writeData(toWrite, numBytes);
     }
     else
     {
